@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.0",
     "node": "^21.7.0",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "react-cookie": "^7.1.0"
   }
 }

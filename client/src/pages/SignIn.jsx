@@ -13,27 +13,37 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch('http://localhost:3000/api/auth/signin', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(formData),
+});
+  
+      if (!res.ok) {
+        const errorMessage =
+          res.status === 500
+            ? 'An unexpected error occurred on the server. Please try again later.'
+            : 'Invalid input. Please check your form and try again.';
+        setLoading(false);
+        setError(errorMessage);
+        return;
+      }
+  
       const data = await res.json();
-      console.log(data);
-
+      console.log(data); // Log the response data here
+  
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
         return;
       }
-
+  
       setLoading(false);
       setError(null);
       navigate('/');
@@ -42,7 +52,8 @@ export default function SignIn() {
       setError(error.message);
     }
   };
-
+ 
+  
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
@@ -54,7 +65,7 @@ export default function SignIn() {
           id='username'
           onChange={handleChange}
         />
-     
+        
         <input
           type='password'
           placeholder='password'
@@ -73,7 +84,7 @@ export default function SignIn() {
       <div className='flex gap-2 mt-5'>
         <p>Dont have an account?</p>
         <Link to={'/sign-up'}>
-          <span className='text-blue-700'>Sign up</span>
+          <span className='text-blue-700'>Sign in</span>
         </Link>
       </div>
       {error && <p className='text-red-500 mt-5'>{error}</p>}
