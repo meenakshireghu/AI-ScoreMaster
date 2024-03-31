@@ -6,7 +6,8 @@ import OAuth from '../components/OAuth';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,16 +19,19 @@ export default function SignIn() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+  
     try {
       dispatch(signInStart());
       const res = await fetch('http://localhost:3000/api/auth/signin', {
-        ethod: 'POST',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (!res.ok) {
         if (res.status === 401) {
           const errorMessage = 'Invalid username or password. Please try again.';
@@ -35,30 +39,26 @@ export default function SignIn() {
           setError(errorMessage);
           return;
         }
-
-        const errorMessage =
-          res.status === 500
-            ? 'An unexpected error occurred on the server. Please try again later.'
-            : 'Invalid input. Please check your form and try again.';
+  
+        const errorMessage = await res.text();
         setLoading(false);
         setError(errorMessage);
         return;
       }
-
+  
       const data = await res.json();
-      console.log(data);
-
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
       }
-
+  
       dispatch(signInSuccess(data));
       navigate('/');
-
     } catch (error) {
       console.error('Error occurred during the fetch request:', error);
       dispatch(signInFailure(error.message));
+    } finally {
+      setLoading(false);
     }
   };
 

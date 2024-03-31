@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use((err, req, res, next) => {
   if (req.path.startsWith('/api')) {
     console.error(`Error in API route: ${req.path} - ${req.method}`);
-    console.error(err.stack);
+    console.error(`Error details: ${JSON.stringify(err, null, 2)}`);
   }
 
   // The existing error handling middleware
