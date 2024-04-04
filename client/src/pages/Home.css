@@ -1,0 +1,221 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    height: 100vh;
+    padding: 10px;
+    padding-top: 0px;
+  }
+  
+  .ps {
+    padding: 20px;
+    padding-top: 10px;
+  }
+  
+  .cs {
+    padding-top: 10px;
+  }
+  
+  .box {
+    width: 170px;
+    height: 195px;
+    background-color: rgba(47, 29, 29, 0.1) !important;
+    border-color: rgb(51 65 85) !important;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .circle {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(51 65 85);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    margin-bottom: 0px;
+  }
+  
+  .text {
+    margin-top: 30px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 400px !important; /* Fixed width */
+   
+  }
+  
+  .popup h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+    font-weight: 750;
+    text-align: center;
+  }
+  
+  .popup label {
+    color: #333;
+    font-size: 15px;
+    font-weight: bold;
+    
+  }
+  
+  .popup input[type="text"] {
+    width: 100%;
+    padding: 2px;
+    margin-bottom: 20px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+  }
+  
+  .popup input[type="file"] {
+    width: 100%;
+    margin-top: 5px;
+    padding: 2px;
+    border: 1px solid #e1d9d9;
+    border-radius: 5px;
+  }
+  
+  .popup .file-container {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .popup p {
+    margin-bottom: 10px;
+    display: inline-block;
+    padding-bottom: 10px;
+    color: #666;
+    font-size: 11px;
+    font-family: Verdana, Geneva, sans-serif;
+  }
+  
+  .popup .submit {
+    width: 100%;
+    padding: 5px;
+    background-color: rgb(51 65 85);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+  }
+  
+  .popup .submit:hover {
+    background-color: black;
+  }
+  
+  .popup .file-hidden {
+    display: none;
+  }
+  
+  .popup input[type="file"]::-webkit-file-upload-button {
+    display: none;
+  }
+  
+  /* Style for selected files */
+.popup.file-selected {
+    display: block;
+  }
+
+  .popup.file-items {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+  }
+  
+  .popup.file-icon {
+    margin-right: 5px;
+  }
+  
+  .popup.remove-file {
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  .file-label {
+    display: inline-block;
+    padding: 0px; /* Adjust padding as needed */
+    background-color:  rgb(51 65 85); /* Button background color */
+    color: white !important; /* Text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    margin-top: 0px !important;
+   
+}
+
+.file-label:hover {
+    background-color: black !important; /* Adjust hover background color */
+}
+
+.popup .close-button {
+    position: relative;
+}
+
+.popup .close-button {
+    position: absolute;
+    top: 12px; /* Adjust top position as needed */
+    right: 15px; /* Adjust right position as needed */
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-content {
+    max-height: 350px; /* Set a maximum height for the container */
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+
+  }
+
+  /* Track */
+.popup-content::-webkit-scrollbar {
+    width: 3px;
+   padding-right: 10px !important;
+
+    
+  }
+  
+  /* Handle */
+  .popup-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px !important;
+    padding-right: 10px !important;
+  }
+  
+  /* Buttons */
+  .popup-content::-webkit-scrollbar-button {
+    background: #555;
+    border-radius: 5px !important;
+    padding-right: 10px !important;
+   
+  }

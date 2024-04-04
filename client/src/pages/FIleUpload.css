@@ -1,0 +1,84 @@
+file-upload-container {
+    position: relative;
+    padding: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    gap: 10px; /* Creates space between the buttons */
+  }
+  
+  .review-btn, .view-marksheet-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: rgb(51 65 85);
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .view-marksheet-btn {
+    background-color: rgb(51, 65, 85); /* Specific background color for the View Marksheet button */
+  }
+  
+  .file-specification {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .file-label {
+    display: inline-block; /* Makes the label a block-level element but allows width to be controlled */
+    width: 150px; /* Sets the width of the button to a medium size */
+    height: 40px; /* Sets the height of the button */
+    line-height: 40px; /* Centers the text vertically */
+    margin-top: 20px; /* Space above the button */
+    cursor: pointer; /* Indicates it's clickable */
+    background-color: rgb(51 65 85); /* A visible and distinct background color */
+    color: white; /* Text color */
+    text-align: center; /* Centers the text horizontally */
+    border-radius: 5px; /* Rounded corners for the button */
+    font-weight: bold; /* Makes the button text bold */
+    text-decoration: none; /* Removes underline from the text */
+  }
+  
+  /* Optionally, add a hover effect to enhance interactivity */
+  .file-label:hover {
+    background-color:rgb(51 65 85) ;
+  }
+  
+  /* New class for upload instruction */
+  .upload-instruction {
+    font-size: 1rem;
+    margin-bottom: 30px; /* Space between instruction and Choose file button */
+  }
+  
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  .modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px; /* Adjust based on your preference */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Optional: Adds a shadow */
+    text-align: center;
+  }
