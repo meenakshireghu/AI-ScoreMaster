@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Home.css';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -146,7 +147,7 @@ export default function Home() {
               <p>Images upto 8MB, max 10</p>
             </div>   
             <br />
-            <button className='submit' onClick={togglePopup}>Create Valuator</button>
+            <Link to="/file-upload" className='submit'>Create Valuator</Link> {/* Use Link for navigation */}
           </div>
         )}
       </div>

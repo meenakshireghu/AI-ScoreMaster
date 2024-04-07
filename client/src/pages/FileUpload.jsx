@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 import './FileUpload.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faUpload } from '@fortawesome/free-solid-svg-icons';
 
-// Simple modal component for displaying upload status
 const UploadModal = ({ isUploading }) => {
   if (!isUploading) return null;
 
@@ -19,7 +18,6 @@ const UploadModal = ({ isUploading }) => {
   );
 };
 
-// PropTypes validation for UploadModal
 UploadModal.propTypes = {
   isUploading: PropTypes.bool.isRequired,
 };
@@ -41,12 +39,13 @@ function FileUpload() {
     setIsUploading(true);
 
     const formData = new FormData();
-    files.forEach((file, index) => {
-        formData.append(files[index], file);
-      });
+files.forEach((file, index) => {
+  formData.append(`files[${index}]`, file);
+});
+
 
     try {
-      await axios.post('http://localhost:5000/upload', formData, {
+      await axios.post('http://localhost:5173/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -66,22 +65,18 @@ function FileUpload() {
 
   return (
     <div className="file-upload-container">
-      {/* Upload Modal */}
       <UploadModal isUploading={isUploading} />
 
       <div className="button-container">
         <button className="review-btn" onClick={() => alert("Reviewing answer sheets...")}>REVIEW ANSWER SHEETS</button>
         <button className="view-marksheet-btn">VIEW MARKSHEET</button>
       </div>
-      <div className="upload-instruction">
-        <button onClick={handleUpload} className="upload-btn">
-          {isUploading ? <FontAwesomeIcon icon={faUpload} spin /> : "UPLOAD ANSWER SHEET"}
-        </button>
-      </div>
-      <label htmlFor="file" className="file-label">Choose files</label>
-      <input type="file" id="file" onChange={handleFileChange} multiple style={{display: 'none'}}/>
+
+      <label htmlFor="file" className="file-label">Choose file(s)</label>
       <p className="file-specification">Images up to 8MB, max 10</p>
-      <ul>
+      <input type="file" id="file" onChange={handleFileChange} multiple style={{display: 'none'}}/>
+
+      <ul className="file-list">
         {files.map((file, index) => (
           <li key={index}>
             {file.name}
@@ -95,6 +90,12 @@ function FileUpload() {
           </li>
         ))}
       </ul>
+
+      <div className="upload-instruction">
+        <button onClick={handleUpload} className="upload-btn">
+          {isUploading ? <FontAwesomeIcon icon={faUpload} spin /> : "UPLOAD"}
+        </button>
+      </div>
     </div>
   );
 }

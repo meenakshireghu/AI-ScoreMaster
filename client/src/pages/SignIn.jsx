@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import OAuth from '../components/OAuth';
 
@@ -17,11 +17,12 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-  
+
     try {
       dispatch(signInStart());
       const res = await fetch('http://localhost:3000/api/auth/signin', {
@@ -31,7 +32,7 @@ export default function SignIn() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (!res.ok) {
         if (res.status === 401) {
           const errorMessage = 'Invalid username or password. Please try again.';
@@ -39,19 +40,19 @@ export default function SignIn() {
           setError(errorMessage);
           return;
         }
-  
+
         const errorMessage = await res.text();
         setLoading(false);
         setError(errorMessage);
         return;
       }
-  
+
       const data = await res.json();
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
       }
-  
+
       dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
@@ -71,17 +72,15 @@ export default function SignIn() {
           placeholder='username'
           className='border p-3 rounded-lg'
           id='username'
-          onChange={handleChange} // Linked to handleChange function
+          onChange={handleChange}
         />
-
         <input
           type='password'
           placeholder='password'
           className='border p-3 rounded-lg'
           id='password'
-          onChange={handleChange} // Linked to handleChange function
+          onChange={handleChange}
         />
-
         <button
           disabled={loading}
           className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
