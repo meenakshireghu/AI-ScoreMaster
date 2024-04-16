@@ -2,6 +2,22 @@ import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
+import multer from 'multer'; // Import multer
+import Valuator from '../models/valuator.js'; // Import the Valuator model
+
+
+// Configure Multer storage (replace 'uploads' with your desired folder)
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 8 * 1024 * 1024 } // Limit to 8MB
+}); // Create Multer upload middleware
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -32,7 +48,6 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const google = async (req, res, next) => {
   try {
@@ -68,3 +83,28 @@ export const signOut = async (req , res, next ) => {
     next(error);
    }
 }
+
+export const createValuator = async (req, res, next) => {
+  try {
+    const { title } = req.body;
+
+    // Access uploaded files through req.files (assuming fields named 'questionPaper' and 'answerKey')
+    const questionPaperFile = req.files.questionPaper[0];
+    const answerKeyFile = req.files.answerKey[0];
+
+    if (!questionPaperFile || !answerKeyFile) {
+      return res.status(400).json({ message: 'Question paper and answer key are required!' });
+    }
+
+    const questionPaperUrl = `http://localhost:3000/uploads/${questionPaperFile.filename}`;
+    const answerKeyUrl = `http://localhost:3000/uploads/${answerKeyFile.filename}`;
+
+    const newValuator = new Valuator({ title, questionPaperUrl, answerKeyUrl });
+    await newValuator.save();
+
+    res.status(201).json({ message: 'Valuator created successfully!', valuator: newValuator });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error creating valuator!' });
+  }
+};
