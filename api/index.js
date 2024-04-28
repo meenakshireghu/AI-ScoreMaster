@@ -6,6 +6,7 @@ import authRouter from './routes/auth.route.js';
 import { errorHandler } from './utils/error.js';
 import cors from 'cors'; // Import the cors package
 import cookieParser from 'cookie-parser';
+import path from 'path'; // Import the path module
 
 dotenv.config();
 
@@ -28,6 +29,12 @@ app.use(express.json());
 // Add the cors middleware to the Express app
 app.use(cors());
 app.use(cookieParser());
+
+
+// Serve static files from the uploads directory
+const uploadsPath = path.join(process.cwd(), 'uploads'); // Use process.cwd() instead of __dirname
+app.use('/uploads', express.static(uploadsPath));
+
 
 //creation of middleware
 

@@ -2,22 +2,25 @@ import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
-import multer from 'multer'; // Import multer
-import Valuator from '../models/valuator.js'; // Import the Valuator model
+import multer from 'multer';
+import path from 'path'; // Import the path module
+import Valuator from '../models/valuator.js';
 
-
-// Configure Multer storage (replace 'uploads' with your desired folder)
+// Configure Multer storage
 const storage = multer.diskStorage({
-  destination: 'uploads/',
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Store files in the 'uploads' folder
+  },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, `${uniqueSuffix}-${file.originalname}`); // Generate unique filenames
   }
 });
 
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 8 * 1024 * 1024 } // Limit to 8MB
-}); // Create Multer upload middleware
+  limits: { fileSize: 8 * 1024 * 1024 } // Limit file size to 8MB
+}); 
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -96,15 +99,17 @@ export const createValuator = async (req, res, next) => {
       return res.status(400).json({ message: 'Question paper and answer key are required!' });
     }
 
-    const questionPaperUrl = `http://localhost:3000/uploads/${questionPaperFile.filename}`;
-    const answerKeyUrl = `http://localhost:3000/uploads/${answerKeyFile.filename}`;
+    // Construct absolute file paths (assuming uploads directory is at the root)
+    const uploadsPath = path.join(__dirname, '..', 'uploads'); // Adjust if uploads directory is elsewhere
+    const questionPaperUrl = path.join(uploadsPath, questionPaperFile.filename);
+    const answerKeyUrl = path.join(uploadsPath, answerKeyFile.filename);
 
     const newValuator = new Valuator({ title, questionPaperUrl, answerKeyUrl });
     await newValuator.save();
 
     res.status(201).json({ message: 'Valuator created successfully!', valuator: newValuator });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error creating valuator!' });
+    next(err);
   }
 };
+

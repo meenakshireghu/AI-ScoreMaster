@@ -52,14 +52,13 @@ export const uploadAnswerSheets = async (req, res, next) => {
         uploadedFiles.push(fileInfo);
 
         // Placeholder for actual processing logic (e.g., saving to database)
-        // You should replace this with your specific implementation
-        // For example:
-        // const newValuation = new Valuation({
-        //   valuatorId: valuatorId,
-        //   data: req.body, // Assuming additional data is sent in the request body
-        //   answerSheet: fileUrl // Store the file URL in the database
-        // });
-        // await newValuation.save();
+        
+        const newValuation = new Valuation({
+           valuatorId: valuatorId,
+           data: req.body, // Assuming additional data is sent in the request body
+           answerSheet: fileUrl // Store the file URL in the database
+         });
+         await newValuation.save();
       }
 
       // Placeholder for response

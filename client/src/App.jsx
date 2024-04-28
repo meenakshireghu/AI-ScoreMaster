@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import FileUpload from './pages/FileUpload';
+import MarkSheet from './pages/MarkSheet';
 
 export default function App() {
   return (
@@ -18,7 +19,8 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
         <Route path="/about" element={<About/>}/>
-        <Route path="/file-upload" element={<FileUpload/>}/> 
+        <Route path="/mark-sheet" element={<MarkSheet/>}/>
+        <Route path="/file-upload/:evaluatorName" element={<FileUpload/>}/> 
         <Route element={<PrivateRoute/>}>
           <Route path="/profile" element={<Profile/>}/>
         </Route>
